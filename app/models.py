@@ -55,7 +55,8 @@ class Brewer(BeerDBModel):
   )
 
   name = models.CharField(max_length=255,
-      help_text='Name of the brewer')
+      help_text='Name of the brewer',
+      unique=True)
   country = fields.CountryField(default='USA',
       help_text='Country of origin')
   origin_state = models.CharField(max_length=128,
@@ -80,7 +81,8 @@ class Brewer(BeerDBModel):
 class BeerStyle(BeerDBModel):
   """Describes a named style of beer (Stout, IPA, etc)"""
   name = models.CharField(max_length=128,
-      help_text='Name of the beer style')
+      help_text='Name of the beer style',
+      unique=True)
 
   def __str__(self):
     return self.name
@@ -89,7 +91,8 @@ class BeerStyle(BeerDBModel):
 class BeerType(BeerDBModel):
   """Describes a specific kind of beer, by name, brewer, and style."""
   name = models.CharField(max_length=255,
-      help_text='Name of the beer; typically unique within a Brewer.')
+      help_text='Name of the beer; typically unique within a Brewer.',
+      unique=True)
   brewer = models.ForeignKey(Brewer,
       help_text='Brewer producing this beer.')
   style = models.ForeignKey(BeerStyle,

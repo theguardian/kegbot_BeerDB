@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
@@ -72,6 +73,14 @@ def beer_type_add(request):
   context['form'] = form
   return render_to_response('beer_type_add.html', context_instance=context)
 
+def beer_type_remove(request, beer_id):
+  btype = get_object_or_404(models.BeerType, id=beer_id)
+
+  models.BeerType.objects.filter(id=beer_id).delete()
+
+  context = RequestContext(request)
+  context['beer_type'] = btype
+  return render_to_response('beer_type_remove.html', context_instance=context)
 
 def brewer_list(request):
   context = RequestContext(request)
@@ -119,6 +128,15 @@ def brewer_add(request):
   context['form'] = form
   return render_to_response('brewer_add.html', context_instance=context)
 
+def brewer_remove(request, brewer_id):
+  brewer = get_object_or_404(models.Brewer, id=brewer_id)
+
+  models.Brewer.objects.filter(id=brewer_id).delete()
+
+  context = RequestContext(request)
+  context['brewer'] = brewer
+  return render_to_response('brewer_remove.html', context_instance=context)
+
 
 def beer_style_list(request):
   context = RequestContext(request)
@@ -165,3 +183,39 @@ def beer_style_add(request):
   context['style'] = "new"
   context['form'] = form
   return render_to_response('beer_style_add.html', context_instance=context)
+
+def beer_style_remove(request, style_id):
+  style = get_object_or_404(models.BeerStyle, id=style_id)
+
+  models.BeerStyle.objects.filter(id=style_id).delete()
+
+  context = RequestContext(request)
+  context['style'] = style
+  return render_to_response('beer_style_remove.html', context_instance=context)
+
+def beer_type_json(request):
+  #btype = get_object_or_404(models.BeerType, id=beer_id)
+
+  btype_json = serializers.serialize("json", models.BeerType.objects.all())
+
+  context = RequestContext(request)
+  #context['beer_type'] = btype
+  return HttpResponse(btype_json, content_type="application/json")
+
+def beer_style_json(request):
+  #btype = get_object_or_404(models.BeerType, id=beer_id)
+
+  bstyle_json = serializers.serialize("json", models.BeerStyle.objects.all())
+
+  context = RequestContext(request)
+  #context['beer_type'] = btype
+  return HttpResponse(bstyle_json, content_type="application/json")
+
+def brewer_json(request):
+  #btype = get_object_or_404(models.BeerType, id=beer_id)
+
+  brewer_json = serializers.serialize("json", models.Brewer.objects.all())
+
+  context = RequestContext(request)
+  #context['beer_type'] = btype
+  return HttpResponse(brewer_json, content_type="application/json")

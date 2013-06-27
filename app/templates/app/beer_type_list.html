@@ -11,7 +11,7 @@
 
 {% block pane %}
 <a href="{% url 'add-beer-type' %}">Add</a>
-<table class="table table-hover table-bordered">
+<table>
 <thead>
     <tr>
         <th>Name</th>
@@ -21,22 +21,17 @@
 </thead>
 <tbody>
 {% for beer in beers %}
-<tr class="clickable" data-href="{% url 'edit-beer-type' beer.id %}">
+<tr>
     <td>
-        <div class="form-horizontal">
-            <a class="btn btn-small btn-primary" href="{% url 'edit-beer-type' beer.id %}">Edit</a>&nbsp;&nbsp;
+            <a href="{% url 'edit-beer-type' beer.id %}">Edit</a>
             <span>{{ beer.name }}</span>
     </td>
     <td>{{ beer.brewer }}</td>
     <td>{{ beer.style }}</td>
+    <td><a href="{% url 'remove-beer-type' beer.id %}">Delete</a></td>
+    
 </tr>
 {% endfor %}
-<!-- <tr class="info">
-    <td colspan="4" style="text-align:right;">
-        <a class="btn btn-success"
-            href=""><i class="icon-plus-sign icon-white"></i> Add New Type</a>
-    </td>
-</tr> -->
 </tbody>
 </table>
 {% endblock %}
