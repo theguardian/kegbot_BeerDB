@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+{% include "header.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "sidebar.html" %}
+{% endblock %}
+
+{% block pane %}
+<h2>Edit Brewer</h2>
+    
+{% crispy form %}
+{% endblock %}
+
+{% block footer %}
+{% include "footer.html" %}
+{% endblock %}

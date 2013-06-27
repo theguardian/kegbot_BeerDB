@@ -1,0 +1,148 @@
+html, body { 
+	margin:0; 
+	padding:0; 
+	height:100%;
+	width:100%;
+	overflow:hidden;
+} 
+
+#container {
+	position:relative;
+    min-height: 100%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:0px;
+    margin-bottom:0px;
+	color:#ffffff;
+}
+
+#header {
+	background: rgba(0, 0, 0, 0.6);
+    color:white;
+	margin:0 auto;
+	height:70px;
+}
+
+#content {
+    height:100%;
+}
+
+small, .small {
+	font-size:10px;
+}
+
+img {
+	border:none;
+}
+
+.sidebar {
+	background: rgba(0, 0, 0, 0.6);
+	border-radius: 15px;
+	float:left;
+	width:275px;
+	margin-left:15px;
+	margin-bottom:35px;
+	padding:15px 15px 15px 15px;
+	max-height:480px;
+	overflow:auto;
+	}
+	
+.pane {
+	background: rgba(0, 0, 0, 0.6);
+	border-radius: 15px;
+	margin-left:335px;
+	margin-top:15px;
+	margin-bottom:35px;
+	margin-right:15px;
+	padding:15px 15px 15px 15px;
+	max-height:480px;
+	overflow:auto;
+	}
+	
+#footer {
+   background: rgba(0, 0, 0, 0.6);
+    color:white;
+	height:30px;
+	width:100%;
+	bottom:0;
+	position:absolute;
+	text-align: justify;
+	z-index:4;
+}
+
+#footer .stretch {
+    width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+}
+
+#footer p.letter {
+	display:inline;
+	font-size:24px;
+}
+
+#footer p.letter:hover {
+	text-decoration:underline;
+	cursor:pointer;
+}
+
+#footer a {
+	color:white;
+	text-decoration:none;
+	}
+
+#footer a:hover {
+	color:white;
+	text-decoration:underline;
+	}
+	
+#footer .footer_text_full {
+	margin-left:15px;
+	margin-right:320px;
+}
+
+#footer .footer_search {
+	position:absolute;
+	bottom:0;
+	right:0;
+	margin-bottom:3px;
+	margin-right:20px;
+
+}
+
+#footer .footer_search input.text {
+	width:120px;
+}
+
+#footer .footer_search input.submit {
+	width:20px;
+}
+
+/* body END */
+
+
+.floatfix{
+    clear: both;
+}
+
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    right:      0;
+	margin-top: 35px;
+	margin-right: 275px;
+	
+
+}
+
+
+body.loading {
+    overflow: hidden;   
+}
+
+body.loading .modal {
+    display: block;
+}

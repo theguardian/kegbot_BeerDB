@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>{% block title %}Kegbot_BeerDB{% endblock %}</title>
+
+  {% block css %}
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'app/style.css' %}" />
+  {% endblock %}
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="header">
+        {% block header %}{% endblock %}
+    </div>
+
+    <div id="content">
+      <div class="sidebar">
+        {% block sidebar %}{% endblock %}
+      </div>
+
+      <div class="pane">
+        {% block pane %}{% endblock %}
+      </div>
+    </div>
+
+    <div id="footer">
+        {% block footer %}{% endblock %}
+    </div>
+  </div>
+</body>
+</html>
