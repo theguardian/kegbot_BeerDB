@@ -23,28 +23,28 @@ from imagekit.processors import resize
 
 resized = ImageSpecField(
     processors=[resize.ResizeToFit(1024, 1024)],
-    image_field='image',
+    source='image',
     format='JPEG',
     options={'quality': 90},
 )
 
 small_resized = ImageSpecField(
     processors=[resize.ResizeToFit(256, 256)],
-    image_field='image',
+    source='image',
     format='JPEG',
     options={'quality': 100},
 )
 
 thumbnail = ImageSpecField(
     processors=[Adjust(contrast=1.2, sharpness=1.1), resize.SmartResize(128, 128)],
-    image_field='image',
+    source='image',
     format='JPEG',
     options={'quality': 100},
 )
 
 small_thumbnail = ImageSpecField(
     processors=[Adjust(contrast=1.2, sharpness=1.1), resize.SmartResize(32, 32)],
-    image_field='image',
+    source='image',
     format='JPEG',
     options={'quality': 100},
 )
