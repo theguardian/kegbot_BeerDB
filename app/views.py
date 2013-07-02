@@ -76,10 +76,15 @@ def beer_type_add(request):
 def beer_type_remove(request, beer_id):
   btype = get_object_or_404(models.BeerType, id=beer_id)
 
-  models.BeerType.objects.filter(id=beer_id).delete()
+  form = forms.ConfirmBeerTypeDelete(instance=btype)
+  if request.method == 'POST':
+    #if form.is_valid():
+    models.BeerType.objects.filter(id=beer_id).delete()
+    messages.success(request, 'Beer type removed.')
 
   context = RequestContext(request)
   context['beer_type'] = btype
+  context['form'] = form
   return render_to_response('beer_type_remove.html', context_instance=context)
 
 def brewer_list(request):
@@ -131,10 +136,15 @@ def brewer_add(request):
 def brewer_remove(request, brewer_id):
   brewer = get_object_or_404(models.Brewer, id=brewer_id)
 
-  models.Brewer.objects.filter(id=brewer_id).delete()
+  form = forms.ConfirmBrewerDelete(instance=brewer)
+  if request.method == 'POST':
+    #if form.is_valid():
+    models.Brewer.objects.filter(id=brewer_id).delete()
+    messages.success(request, 'Brewer removed.')
 
   context = RequestContext(request)
   context['brewer'] = brewer
+  context['form'] = form
   return render_to_response('brewer_remove.html', context_instance=context)
 
 
@@ -187,10 +197,15 @@ def beer_style_add(request):
 def beer_style_remove(request, style_id):
   style = get_object_or_404(models.BeerStyle, id=style_id)
 
-  models.BeerStyle.objects.filter(id=style_id).delete()
+  form = forms.ConfirmBeerStyleDelete(instance=style)
+  if request.method == 'POST':
+    #if form.is_valid():
+    models.BeerStyle.objects.filter(id=style_id).delete()
+    messages.success(request, 'Beer style removed.')
 
   context = RequestContext(request)
   context['style'] = style
+  context['form'] = form
   return render_to_response('beer_style_remove.html', context_instance=context)
 
 def beer_type_json(request):

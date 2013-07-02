@@ -64,3 +64,43 @@ class BeerStyleForm(forms.ModelForm):
           Submit('submit', 'Save', css_class='btn-primary'),
       )
   )
+
+class ConfirmBrewerDelete(forms.ModelForm):
+  class Meta:
+    model = models.Brewer
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('name', css_class='input-xlarge'),
+      FormActions(
+          Submit('submit', 'Delete', css_class='btn-primary'),
+      )
+  )
+
+class ConfirmBeerStyleDelete(forms.ModelForm):
+  class Meta:
+    model = models.BeerStyle
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('name', css_class='input-xlarge'),
+      FormActions(
+          Submit('submit', 'Delete', css_class='btn-primary'),
+      )
+  )
+
+
+class ConfirmBeerTypeDelete(forms.ModelForm):
+  class Meta:
+    model = models.BeerType
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('name', css_class='input-xlarge'),
+      FormActions(
+          Submit('submit', 'Delete', css_class='btn-primary'),
+      )
+  )

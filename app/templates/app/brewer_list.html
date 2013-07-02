@@ -27,14 +27,30 @@
             <a href="{% url 'edit-brewer' brewer.id %}">Edit</a>
             <span>{{ brewer.name }}</span>
     </td>
-    <td>{{ beer.origin_country }}</td>
-    <td>{{ beer.origin_state }}</td>
-    <td>{{ beer.origin_city }}</td>
+    <td>{{ brewer.country }}</td>
+    <td>{{ brewer.origin_state }}</td>
+    <td>{{ brewer.origin_city }}</td>
     <td><a href="{% url 'remove-brewer' brewer.id %}">Delete</a></td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if brewers.has_previous %}
+            <a href="?page={{ brewers.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ brewers.number }} of {{ brewers.paginator.num_pages }}.
+        </span>
+
+        {% if brewers.has_next %}
+            <a href="?page={{ brewers.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
 
 {% block footer %}

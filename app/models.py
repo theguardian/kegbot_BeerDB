@@ -51,6 +51,7 @@ class Brewer(BeerDBModel):
   """Describes a producer of beer."""
   PRODUCTION_CHOICES = (
     ('commercial', 'Commercial brewer'),
+    ('brewpub', 'Brew pub'),
     ('homebrew', 'Home brewer'),
   )
 

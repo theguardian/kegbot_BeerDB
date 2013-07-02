@@ -29,6 +29,23 @@
 {% endfor %}
 </tbody>
 </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if styles.has_previous %}
+            <a href="?page={{ styles.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ styles.number }} of {{ styles.paginator.num_pages }}.
+        </span>
+
+        {% if styles.has_next %}
+            <a href="?page={{ styles.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
 {% endblock %}
 
 {% block footer %}

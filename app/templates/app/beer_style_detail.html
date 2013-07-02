@@ -12,7 +12,17 @@
 {% block pane %}
 <h2>Edit Beer Style</h2>
     
-{% crispy form %}
+{% if request.method != 'POST' %} 
+	{% crispy form %}
+{% else %}
+	{% if messages %} 
+    	{% for message in messages %} 
+        	{{ message }} 
+    	{% endfor %} 
+	{% endif %} 
+	{% crispy form %}
+{% endif %}
+
 {% endblock %}
 
 {% block footer %}
