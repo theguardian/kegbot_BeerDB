@@ -3,22 +3,21 @@ import datetime
 
 from django import forms
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.forms import widgets
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.decorators.http import require_http_methods
 from django.db import models
 from django.db.models import Q
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from app.serializers import UserSerializer, GroupSerializer
+from app.serializers import BeerTypeSerializer, BeerStyleSerializer, BrewerSerializer
 from app import models
 from app import forms
 
@@ -234,3 +233,59 @@ def brewer_json(request):
   context = RequestContext(request)
   #context['beer_type'] = btype
   return HttpResponse(brewer_json, content_type="application/json")
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+class BeersViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = models.BeerType.objects.all()
+    serializer_class = BeerTypeSerializer
+
+    def get_queryset(self):
+      queryset = models.BeerType.objects.all()
+      btype= self.request.QUERY_PARAMS.get('name', None)
+      if btype is not None:
+        queryset = queryset.filter(name__contains=btype)
+      return queryset
+
+class BeerStyleViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = models.BeerStyle.objects.all()
+    serializer_class = BeerStyleSerializer
+
+    def get_queryset(self):
+      queryset = models.BeerStyle.objects.all()
+      bstyle= self.request.QUERY_PARAMS.get('name', None)
+      if bstyle is not None:
+        queryset = queryset.filter(name__contains=bstyle)
+      return queryset
+
+class BrewerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = models.Brewer.objects.all()
+    serializer_class = BrewerSerializer
+
+    def get_queryset(self):
+      queryset = models.Brewer.objects.all()
+      brewer = self.request.QUERY_PARAMS.get('name', None)
+      if brewer is not None:
+        queryset = queryset.filter(name__contains=brewer)
+      return queryset

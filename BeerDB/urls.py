@@ -1,6 +1,13 @@
 from django.conf.urls import patterns, include, url
-
+from rest_framework import routers
 from app import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'beers', views.BeersViewSet)
+router.register(r'brewers', views.BrewerViewSet)
+router.register(r'beer-styles', views.BeerStyleViewSet)
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
@@ -19,4 +26,7 @@ urlpatterns = patterns('',
     url(r'^json/beers/$', views.beer_type_json, name='json-beer-type'),
     url(r'^json/brewer/$', views.brewer_json, name='json-brewer'),
     url(r'^json/beer-styles/$', views.beer_style_json, name='json-beer-style'),
+    url(r'^api/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 )
