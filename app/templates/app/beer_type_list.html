@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block pane %}
-<a href="{% url 'add-beer-type' %}">Add</a>
-<table>
+<a class ="btn btn-small btn-primary" href="{% url 'add-beer-type' %}">Add</a>
+<table class="table table-hover table-bordered">
 <thead>
     <tr>
         <th>Name</th>
@@ -23,12 +23,14 @@
 {% for beer in beers %}
 <tr>
     <td>
-            <a href="{% url 'edit-beer-type' beer.id %}">Edit</a>
+        <div class="form-horizontal">
+            <a class ="btn btn-small btn-primary" href="{% url 'edit-beer-type' beer.id %}">Edit</a>
             <span>{{ beer.name }}</span>
+        </div>
     </td>
     <td>{{ beer.brewer }}</td>
     <td>{{ beer.style }}</td>
-    <td><a href="{% url 'remove-beer-type' beer.id %}">Delete</a></td>
+    <td><a class ="btn btn-small btn-primary" href="{% url 'remove-beer-type' beer.id %}">Delete</a></td>
     
 </tr>
 {% endfor %}
