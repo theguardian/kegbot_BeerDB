@@ -30,3 +30,7 @@ class BrewerSerializer(serializers.ModelSerializer):
 		model = models.Brewer
 		#fields = ('name', 'country', 'origin_state', 'origin_city',
 			#'production', 'url', 'description', 'image')
+
+class PictureSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = models.Picture

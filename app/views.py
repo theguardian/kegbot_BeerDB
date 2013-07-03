@@ -17,7 +17,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from app.serializers import UserSerializer, GroupSerializer
-from app.serializers import BeerTypeSerializer, BeerStyleSerializer, BrewerSerializer
+from app.serializers import BeerTypeSerializer, BeerStyleSerializer, BrewerSerializer, PictureSerializer
 from app import models
 from app import forms
 
@@ -49,7 +49,14 @@ def beer_type_detail(request, beer_id):
   if request.method == 'POST':
     form = forms.BeerTypeForm(request.POST, instance=btype)
     if form.is_valid():
-      form.save()
+      btype = form.save()
+      new_image = request.FILES.get('new_image')
+      if new_image:
+        pic = models.Picture.objects.create()
+        pic.image.save(new_image.name, new_image)
+        pic.save()
+        btype.image = pic
+        btype.save()
       messages.success(request, 'Beer type updated.')
 
   context = RequestContext(request)
@@ -64,7 +71,14 @@ def beer_type_add(request):
   if request.method == 'POST':
     form = forms.BeerTypeForm(request.POST)
     if form.is_valid():
-      form.save()
+      btype = form.save()
+      new_image = request.FILES.get('new_image')
+      if new_image:
+        pic = models.Picture.objects.create()
+        pic.image.save(new_image.name, new_image)
+        pic.save()
+        btype.image = pic
+        btype.save()
       messages.success(request, 'Beer type added.')
 
   context = RequestContext(request)
@@ -109,7 +123,14 @@ def brewer_detail(request, brewer_id):
   if request.method == 'POST':
     form = forms.BrewerForm(request.POST, instance=brewer)
     if form.is_valid():
-      form.save()
+      brewer = form.save()
+      new_image = request.FILES.get('new_image')
+      if new_image:
+        pic = models.Picture.objects.create()
+        pic.image.save(new_image.name, new_image)
+        pic.save()
+        brewer.image = pic
+        brewer.save()
       messages.success(request, 'Brewer updated.')
 
   context = RequestContext(request)
@@ -124,7 +145,14 @@ def brewer_add(request):
   if request.method == 'POST':
     form = forms.BrewerForm(request.POST)
     if form.is_valid():
-      form.save()
+      brewer = form.save()
+      new_image = request.FILES.get('new_image')
+      if new_image:
+        pic = models.Picture.objects.create()
+        pic.image.save(new_image.name, new_image)
+        pic.save()
+        brewer.image = pic
+        brewer.save()
       messages.success(request, 'Brewer added.')
 
   context = RequestContext(request)
@@ -289,3 +317,10 @@ class BrewerViewSet(viewsets.ModelViewSet):
       if brewer is not None:
         queryset = queryset.filter(name__contains=brewer)
       return queryset
+
+class PictureViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = models.Picture.objects.all()
+    serializer_class = PictureSerializer

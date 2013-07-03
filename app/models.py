@@ -49,6 +49,9 @@ class BeerDBModel(models.Model):
 
 class Brewer(BeerDBModel):
   """Describes a producer of beer."""
+  class Meta:
+    ordering = ('name',)
+
   PRODUCTION_CHOICES = (
     ('commercial', 'Commercial brewer'),
     ('brewpub', 'Brew pub'),
@@ -73,14 +76,17 @@ class Brewer(BeerDBModel):
   description = models.TextField(default='', blank=True, null=True,
       help_text='A short description of the brewer')
   image = models.ForeignKey('Picture', blank=True, null=True,
-      related_name='beer_brewers', on_delete=models.SET_NULL)
+      related_name='brewer', on_delete=models.SET_NULL,
+      help_text='Logo or artwork for this brewer.')
 
   def __str__(self):
     return self.name
 
-
 class BeerStyle(BeerDBModel):
   """Describes a named style of beer (Stout, IPA, etc)"""
+  class Meta:
+    ordering = ('name',)
+
   name = models.CharField(max_length=128,
       help_text='Name of the beer style',
       unique=True)
@@ -91,6 +97,8 @@ class BeerStyle(BeerDBModel):
 
 class BeerType(BeerDBModel):
   """Describes a specific kind of beer, by name, brewer, and style."""
+  class Meta:
+    ordering = ('name',)
   name = models.CharField(max_length=255,
       help_text='Name of the beer; typically unique within a Brewer.',
       unique=True)
@@ -126,3 +134,4 @@ class BeerType(BeerDBModel):
     if self.brewer.image:
       return self.brewer.image
     return None
+

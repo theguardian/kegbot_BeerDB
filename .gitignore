@@ -1,1 +1,3 @@
 *.pyc
+/media/CACHE/*
+/media/pics/*

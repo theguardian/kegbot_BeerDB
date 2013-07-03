@@ -14,6 +14,9 @@ class BeerTypeForm(forms.ModelForm):
         'calories_oz', 'carbs_oz', 'original_gravity', 'specific_gravity',
         'untappd_beer_id')
 
+  new_image = forms.ImageField(required=False,
+    help_text='Set/replace image for this beer type.')
+
   helper = FormHelper()
   helper.form_class = 'form-horizontal'
   helper.layout = Layout(
@@ -27,6 +30,7 @@ class BeerTypeForm(forms.ModelForm):
       Field('original_gravity'),
       Field('specific_gravity'),
       Field('untappd_beer_id'),
+      Field('new_image'),
       FormActions(
           Submit('submit', 'Save', css_class='btn-primary'),
       )
@@ -35,6 +39,9 @@ class BeerTypeForm(forms.ModelForm):
 class BrewerForm(forms.ModelForm):
   class Meta:
     model = models.Brewer
+
+  new_image = forms.ImageField(required=False,
+    help_text='Set/replace image for this brewer.')
 
   helper = FormHelper()
   helper.form_class = 'form-horizontal'
@@ -46,7 +53,7 @@ class BrewerForm(forms.ModelForm):
       Field('production'),
       Field('url'),
       Field('description'),
-      Field('image'),
+      Field('new_image'),
       FormActions(
           Submit('submit', 'Save', css_class='btn-primary'),
       )
