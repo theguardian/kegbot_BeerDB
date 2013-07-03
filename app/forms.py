@@ -111,3 +111,16 @@ class ConfirmBeerTypeDelete(forms.ModelForm):
           Submit('submit', 'Delete', css_class='btn-primary'),
       )
   )
+
+class ConfirmImagesDelete(forms.ModelForm):
+  class Meta:
+    model = models.Picture
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('', css_class='input-xlarge'),
+      FormActions(
+          Submit('submit', 'Delete', css_class='btn-primary'),
+      )
+  )

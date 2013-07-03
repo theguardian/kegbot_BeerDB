@@ -262,6 +262,24 @@ def brewer_json(request):
   #context['beer_type'] = btype
   return HttpResponse(brewer_json, content_type="application/json")
 
+def tools(request):
+  context = RequestContext(request)
+  return render_to_response('tools.html', context_instance=context)
+
+def image_list(request):
+  context = RequestContext(request)
+  images = models.Picture.objects.all().order_by('image')
+
+  form = forms.ConfirmImagesDelete()
+  if request.method == 'POST':
+    #if form.is_valid():
+    models.Picture.objects.all().delete()
+    messages.success(request, 'All images removed.')
+  
+  context['images'] = images
+  context['form'] = form
+  return render_to_response('images.html', context_instance=context)
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.

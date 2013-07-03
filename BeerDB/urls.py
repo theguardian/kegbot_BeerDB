@@ -31,4 +31,6 @@ urlpatterns = patterns('',
     url(r'^json/beer-styles/$', views.beer_style_json, name='json-beer-style'),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^tools/$', views.tools, name='tools'),
+    url(r'^tools/images/$', views.image_list, name='list-images'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+{% include "header.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "sidebar.html" %}
+{% endblock %}
+
+{% block pane %}
+<h2>Confirm Removal of Following Images:</h2>
+{% if request.method != 'POST' %} 
+    {% crispy form %}
+    <table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for image in images %}
+    <tr>
+        <td>
+            <div class="form-horizontal">
+             <span>{{ image.image }}</span>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% else %}
+    {% if messages %} 
+        {% for message in messages %} 
+            {{ message }} 
+        {% endfor %} 
+    {% endif %} 
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+{% include "footer.html" %}
+{% endblock %}
