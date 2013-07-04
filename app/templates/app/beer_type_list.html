@@ -10,11 +10,14 @@
 {% endblock %}
 
 {% block pane %}
-<a class ="btn btn-small btn-primary" href="{% url 'add-beer-type' %}">Add</a>
 <table class="table table-hover table-bordered">
 <thead>
     <tr>
-        <th>Name</th>
+        <th>
+            <div class="form-horizontal">
+                <a class ="btn btn-small btn-primary" href="{% url 'add-beer-type' %}">Add</a>
+            <span>Name</span>
+        </th>
         <th>Brewer</th>
         <th>Style</th>
     </tr>

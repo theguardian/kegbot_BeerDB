@@ -317,9 +317,9 @@ class BeerStyleViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
       queryset = models.BeerStyle.objects.all()
-      bstyle= self.request.QUERY_PARAMS.get('name', None)
+      bstyle= self.request.QUERY_PARAMS.get('id', None)
       if bstyle is not None:
-        queryset = queryset.filter(name__contains=bstyle)
+        queryset = queryset.filter(id=bstyle)
       return queryset
 
 class BrewerViewSet(viewsets.ModelViewSet):
@@ -331,9 +331,9 @@ class BrewerViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
       queryset = models.Brewer.objects.all()
-      brewer = self.request.QUERY_PARAMS.get('name', None)
+      brewer = self.request.QUERY_PARAMS.get('id', None)
       if brewer is not None:
-        queryset = queryset.filter(name__contains=brewer)
+        queryset = queryset.filter(id=brewer)
       return queryset
 
 class PictureViewSet(viewsets.ModelViewSet):
@@ -342,3 +342,10 @@ class PictureViewSet(viewsets.ModelViewSet):
     """
     queryset = models.Picture.objects.all()
     serializer_class = PictureSerializer
+
+    def get_queryset(self):
+      queryset = models.Picture.objects.all()
+      picture = self.request.QUERY_PARAMS.get('id', None)
+      if picture is not None:
+        queryset = queryset.filter(id=picture)
+      return queryset
