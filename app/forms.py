@@ -39,6 +39,8 @@ class BeerTypeForm(forms.ModelForm):
 class BrewerForm(forms.ModelForm):
   class Meta:
     model = models.Brewer
+    fields = ('name', 'country', 'origin_state', 'origin_city',
+        'production', 'url', 'description')
 
   new_image = forms.ImageField(required=False,
     help_text='Set/replace image for this brewer.')

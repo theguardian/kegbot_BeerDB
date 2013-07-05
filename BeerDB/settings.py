@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'imagekit',
     'rest_framework',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

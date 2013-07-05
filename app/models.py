@@ -13,27 +13,13 @@ from django.db.models.signals import pre_save
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 from django.utils import timezone
+from south.modelsinspector import add_introspection_rules
 
 from app import fields
 from app import imagespecs
+from app import functions
 
-def _pics_file_name(instance, filename):
-  rand_salt = random.randrange(0xffff)
-  new_filename = '%04x-%s' % (rand_salt, filename)
-  return os.path.join('pics', new_filename)
-
-class Picture(models.Model):
-  image = models.ImageField(upload_to=_pics_file_name,
-      help_text='The image')
-  resized = imagespecs.resized
-  thumbnail = imagespecs.thumbnail
-  small_resized = imagespecs.small_resized
-  small_thumbnail = imagespecs.small_thumbnail
-
-  time = models.DateTimeField(default=timezone.now)
-
-  def __str__(self):
-    return 'Picture: %s' % self.image
+add_introspection_rules([], ["^app\.fields\.CountryField"])
 
 class BeerDBModel(models.Model):
   class Meta:
@@ -81,6 +67,10 @@ class Brewer(BeerDBModel):
 
   def __str__(self):
     return self.name
+
+  def GetImage(self):
+    if self.image:
+      return self.image
 
 class BeerStyle(BeerDBModel):
   """Describes a named style of beer (Stout, IPA, etc)"""
@@ -131,7 +121,25 @@ class BeerType(BeerDBModel):
   def GetImage(self):
     if self.image:
       return self.image
-    if self.brewer.image:
-      return self.brewer.image
-    return None
+    #if self.brewer.image:
+      #return self.brewer.image
+    #return None
 
+def _pics_file_name(instance, filename):
+  crc_filename = instance.class1
+  ext = filename.split('.')[-1]
+  new_filename = "%s.%s" % (crc_filename, ext)
+  return os.path.join('pics', new_filename)
+
+class Picture(models.Model):
+  image = models.ImageField(upload_to=_pics_file_name,
+      help_text='The image')
+  resized = imagespecs.resized
+  thumbnail = imagespecs.thumbnail
+  small_resized = imagespecs.small_resized
+  small_thumbnail = imagespecs.small_thumbnail
+
+  time = models.DateTimeField(default=timezone.now)
+
+  def __str__(self):
+    return 'Picture: %s' % self.image

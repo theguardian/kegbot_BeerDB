@@ -13,12 +13,26 @@
 <h2>Add Brewer</h2>
 
 {% if request.method != 'POST' %} 
+	{% if brewer.image %}
+		<div class="row-fluid">
+			<div class="span10">
+				<p><img src="{{brewer.image.resized.url}}"/></p>
+			</div>
+		</div>
+	{% endif %}
 	{% crispy form %}
 {% else %}
 	{% if messages %} 
     	{% for message in messages %} 
         	{{ message }} 
     	{% endfor %} 
+	{% endif %} 
+	{% if brewer.image %}
+		<div class="row-fluid">
+			<div class="span10">
+				<p><img src="{{brewer.image.resized.url}}"/></p>
+			</div>
+		</div>
 	{% endif %}
 	{% crispy form %}
 {% endif %}
