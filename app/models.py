@@ -126,7 +126,8 @@ class BeerType(BeerDBModel):
     #return None
 
 def _pics_file_name(instance, filename):
-  crc_filename = instance.class1
+  fname = filename.split('.')[0]
+  crc_filename = functions.get_crc32(fname)
   ext = filename.split('.')[-1]
   new_filename = "%s.%s" % (crc_filename, ext)
   return os.path.join('pics', new_filename)
@@ -140,6 +141,11 @@ class Picture(models.Model):
   small_thumbnail = imagespecs.small_thumbnail
 
   time = models.DateTimeField(default=timezone.now)
+
+  brewer_id = models.IntegerField(blank=True, null=True)
+  brewer_name = models.CharField(max_length=255, blank=True, null=True)
+  btype_id = models.IntegerField(blank=True, null=True)
+  btype_name = models.CharField(max_length=255, blank=True, null=True)
 
   def __str__(self):
     return 'Picture: %s' % self.image

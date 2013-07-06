@@ -53,7 +53,10 @@ def beer_type_detail(request, beer_id):
       new_image = request.FILES.get('new_image')
       if new_image:
         pic = models.Picture.objects.create()
-        pic.image.save(new_image.name, new_image)
+        ext = new_image.name.split('.')[-1]
+        pic.image.save(btype.name+'.'+ext, new_image)
+        pic.btype_id = btype.id
+        pic.btype_name = btype.name
         pic.save()
         btype.image = pic
         btype.save()
@@ -75,7 +78,10 @@ def beer_type_add(request):
       new_image = request.FILES.get('new_image')
       if new_image:
         pic = models.Picture.objects.create()
-        pic.image.save(new_image.name, new_image)
+        ext = new_image.name.split('.')[-1]
+        pic.image.save(btype.name+'.'+ext, new_image)
+        pic.btype_id = btype.id
+        pic.btype_name = btype.name
         pic.save()
         btype.image = pic
         btype.save()
@@ -127,7 +133,10 @@ def brewer_detail(request, brewer_id):
       new_image = request.FILES.get('new_image')
       if new_image:
         pic = models.Picture.objects.create()
-        pic.image.save(new_image.name, new_image)
+        ext = new_image.name.split('.')[-1]
+        pic.image.save(brewer.name+'.'+ext, new_image)
+        pic.brewer_id = brewer.id
+        pic.brewer_name = brewer.name
         pic.save()
         brewer.image = pic
         brewer.save()
@@ -149,7 +158,10 @@ def brewer_add(request):
       new_image = request.FILES.get('new_image')
       if new_image:
         pic = models.Picture.objects.create()
-        pic.image.save(new_image.name, new_image)
+        ext = new_image.name.split('.')[-1]
+        pic.image.save(brewer.name+'.'+ext, new_image)
+        pic.brewer_id = brewer.id
+        pic.brewer_name = brewer.name
         pic.save()
         brewer.image = pic
         brewer.save()
