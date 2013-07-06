@@ -54,9 +54,11 @@ def beer_type_detail(request, beer_id):
       if new_image:
         pic = models.Picture.objects.create()
         ext = new_image.name.split('.')[-1]
-        pic.image.save(btype.name+'.'+ext, new_image)
+        pic.image.save(btype.brewer.name+'.'+btype.name+'.'+ext, new_image)
         pic.btype_id = btype.id
         pic.btype_name = btype.name
+        pic.brewer_id = btype.brewer
+        pic.brewer_name = btype.brewer.name
         pic.save()
         btype.image = pic
         btype.save()
@@ -79,9 +81,11 @@ def beer_type_add(request):
       if new_image:
         pic = models.Picture.objects.create()
         ext = new_image.name.split('.')[-1]
-        pic.image.save(btype.name+'.'+ext, new_image)
+        pic.image.save(btype.brewer.name+'.'+btype.name+'.'+ext, new_image)
         pic.btype_id = btype.id
         pic.btype_name = btype.name
+        pic.brewer_id = btype.brewer
+        pic.brewer_name = btype.brewer.name
         pic.save()
         btype.image = pic
         btype.save()

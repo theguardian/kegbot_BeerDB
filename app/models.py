@@ -126,9 +126,9 @@ class BeerType(BeerDBModel):
     #return None
 
 def _pics_file_name(instance, filename):
-  fname = filename.split('.')[0]
-  crc_filename = functions.get_crc32(fname)
   ext = filename.split('.')[-1]
+  fname = functions.rchop(filename, '.'+ext)
+  crc_filename = functions.get_crc32(fname)
   new_filename = "%s.%s" % (crc_filename, ext)
   return os.path.join('pics', new_filename)
 

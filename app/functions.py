@@ -12,3 +12,8 @@ def get_crc32( string ):
         crc = crc & 0xFFFFFFFF
         
     return '%08x' % crc
+
+def rchop(thestring, ending):
+  if thestring.endswith(ending):
+    return thestring[:-len(ending)]
+  return thestring
