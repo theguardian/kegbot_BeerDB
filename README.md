@@ -17,6 +17,7 @@ Built in a virtualenv with the following packages, installed using pip:
 * djangorestframework
 * django-filter
 * markdown
+* south
 
 For production servers, the following are recommended:
 * gunicorn
