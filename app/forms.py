@@ -11,7 +11,7 @@ class BeerTypeForm(forms.ModelForm):
   class Meta:
     model = models.BeerType
     fields = ('name', 'style', 'brewer', 'edition', 'abv',
-        'calories_oz', 'carbs_oz', 'original_gravity', 'specific_gravity',
+        'calories_oz', 'carbs_oz', 'original_gravity', 'specific_gravity', 'description',
         'untappd_beer_id')
 
   new_image = forms.ImageField(required=False,
@@ -29,6 +29,7 @@ class BeerTypeForm(forms.ModelForm):
       Field('carbs_oz'),
       Field('original_gravity'),
       Field('specific_gravity'),
+      Field('description'),
       Field('untappd_beer_id'),
       Field('new_image'),
       FormActions(

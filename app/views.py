@@ -300,12 +300,13 @@ def image_list(request):
 
 def styles_wipe(request):
   context = RequestContext(request)
-  styles = models.BeerStyle.objects.all().order_by('name')
+  styles = models.BeerStyle.objects.all()
 
   form = forms.ConfirmMultipleBeerStyleDelete()
   if request.method == 'POST':
     #if form.is_valid():
-    for x in range(1,10000):
+    max_id = models.BeerStyle.objects.latest('id').id
+    for x in range(1, max_id+1):
       models.BeerStyle.objects.filter(id=x).delete()
     messages.success(request, 'All Beer Styles removed.')
   
@@ -315,12 +316,13 @@ def styles_wipe(request):
 
 def brewers_wipe(request):
   context = RequestContext(request)
-  brewers = models.Brewer.objects.all().order_by('name')
+  brewers = models.Brewer.objects.all()
 
   form = forms.ConfirmMultipleBrewerDelete()
   if request.method == 'POST':
     #if form.is_valid():
-    for x in range(1, 10000):
+    max_id = models.Brewer.objects.latest('id').id
+    for x in range(1, max_id+1):
       models.Brewer.objects.filter(id=x).delete()
     messages.success(request, 'All Brewers removed.')
   
@@ -335,7 +337,9 @@ def beers_wipe(request):
   form = forms.ConfirmMultipleBeerTypeDelete()
   if request.method == 'POST':
     #if form.is_valid():
-    models.BeerType.objects.all().delete()
+    max_id = models.BeerType.objects.latest('id').id
+    for x in range(1, max_id+1):
+      models.BeerType.objects.filter(id=x).delete()
     messages.success(request, 'All Beer Types removed.')
   
   context['btypes'] = btypes
@@ -394,6 +398,7 @@ def csv_import(request):
               btype = models.BeerType.objects.create(brewer_id=line['brewer'], style_id=line['style'])
               btype.name = line['name']
               btype.edition = line['edition']
+              btype.description = line['description']
               if line['abv'] != '':
                 btype.abv = float(line['abv'])
               if line['calories_oz'] != '':

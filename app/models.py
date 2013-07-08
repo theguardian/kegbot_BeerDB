@@ -109,6 +109,8 @@ class BeerType(BeerDBModel):
       help_text='Original gravity of the beer.')
   specific_gravity = models.FloatField(blank=True, null=True,
       help_text='Specific/final gravity of the beer.')
+  description = models.TextField(default='', blank=True, null=True,
+      help_text='A short description of the beer')
   image = models.ForeignKey('Picture', blank=True, null=True,
       related_name='beer_types', on_delete=models.SET_NULL,
       help_text='Logo or artwork for this beer type.')
