@@ -24,3 +24,5 @@ For production servers, the following are recommended:
 * nginx
 * supervisor
 
+kegbot_BeerDB code is licensed under GNU v2.0.  The initial contents leverage beer data from openbeerdb.com, licensed under the Open Database License & Database Content License.
+

@@ -65,8 +65,8 @@ class Brewer(BeerDBModel):
       related_name='brewer', on_delete=models.SET_NULL,
       help_text='Logo or artwork for this brewer.')
 
-  def __str__(self):
-    return self.name
+  def __unicode__(self):
+    return u'%s' % (self.name)
 
   def GetImage(self):
     if self.image:
@@ -81,17 +81,17 @@ class BeerStyle(BeerDBModel):
       help_text='Name of the beer style',
       unique=True)
 
-  def __str__(self):
-    return self.name
+  def __unicode__(self):
+    return u'%s' % (self.name)
 
 
 class BeerType(BeerDBModel):
   """Describes a specific kind of beer, by name, brewer, and style."""
   class Meta:
     ordering = ('name',)
+    unique_together = ('name', 'brewer', 'edition')
   name = models.CharField(max_length=255,
-      help_text='Name of the beer; typically unique within a Brewer.',
-      unique=True)
+      help_text='Name of the beer; typically unique within a Brewer.')
   brewer = models.ForeignKey(Brewer,
       help_text='Brewer producing this beer.')
   style = models.ForeignKey(BeerStyle,
@@ -115,8 +115,8 @@ class BeerType(BeerDBModel):
   untappd_beer_id = models.IntegerField(blank=True, null=True,
       help_text='Untappd.com beer id for this beer, if known')
 
-  def __str__(self):
-    return "%s by %s" % (self.name, self.brewer)
+  def __unicode__(self):
+    return u"%s by %s" % (self.name, self.brewer)
 
   def GetImage(self):
     if self.image:
@@ -147,5 +147,5 @@ class Picture(models.Model):
   btype_id = models.IntegerField(blank=True, null=True)
   btype_name = models.CharField(max_length=255, blank=True, null=True)
 
-  def __str__(self):
-    return 'Picture: %s' % self.image
+  def __unicode__(self):
+    return u'Picture: %s' % self.image

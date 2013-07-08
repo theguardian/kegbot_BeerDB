@@ -1,5 +1,7 @@
 import cStringIO
 import datetime
+import csv
+import codecs
 
 from django import forms
 from django.contrib import messages
@@ -295,6 +297,125 @@ def image_list(request):
   context['images'] = images
   context['form'] = form
   return render_to_response('images.html', context_instance=context)
+
+def styles_wipe(request):
+  context = RequestContext(request)
+  styles = models.BeerStyle.objects.all().order_by('name')
+
+  form = forms.ConfirmMultipleBeerStyleDelete()
+  if request.method == 'POST':
+    #if form.is_valid():
+    for x in range(1,10000):
+      models.BeerStyle.objects.filter(id=x).delete()
+    messages.success(request, 'All Beer Styles removed.')
+  
+  context['styles'] = styles
+  context['form'] = form
+  return render_to_response('wipe_styles.html', context_instance=context)
+
+def brewers_wipe(request):
+  context = RequestContext(request)
+  brewers = models.Brewer.objects.all().order_by('name')
+
+  form = forms.ConfirmMultipleBrewerDelete()
+  if request.method == 'POST':
+    #if form.is_valid():
+    for x in range(1, 10000):
+      models.Brewer.objects.filter(id=x).delete()
+    messages.success(request, 'All Brewers removed.')
+  
+  context['brewers'] = brewers
+  context['form'] = form
+  return render_to_response('wipe_brewers.html', context_instance=context)
+
+def beers_wipe(request):
+  context = RequestContext(request)
+  btypes = models.BeerType.objects.all().order_by('name')
+
+  form = forms.ConfirmMultipleBeerTypeDelete()
+  if request.method == 'POST':
+    #if form.is_valid():
+    models.BeerType.objects.all().delete()
+    messages.success(request, 'All Beer Types removed.')
+  
+  context['btypes'] = btypes
+  context['form'] = form
+  return render_to_response('wipe_beers.html', context_instance=context)
+
+def csv_import(request):
+  
+  form = forms.ImportCSV()
+  if request.method == 'POST':
+    form = forms.ImportCSV(request.POST, request.FILES)
+    if form.is_valid():
+      new_file = request.FILES.get('new_file')
+      entry_count = 0;
+      num_entries = 0;
+      if new_file.name == 'styles.csv':
+        records = csv.DictReader(new_file)
+        for line in records:
+          if line['name'] != '':
+            num_entries += 1
+            try:
+              style = models.BeerStyle.objects.get(name=line['name'])
+            except:
+              style = models.BeerStyle.objects.create()
+              style.name = line['name']
+              style.save()
+              entry_count += 1
+        messages.success(request, str(entry_count)+' of '+str(num_entries)+' Beer Styles Imported.')
+      elif new_file.name == 'breweries.csv':
+        records = csv.DictReader(new_file)
+        for line in records:
+          if line['name'] != '':
+            num_entries += 1
+            try:
+              brewer = models.Brewer.objects.get(name=line['name'])
+            except:
+              brewer = models.Brewer.objects.create()
+              brewer.name = line['name']
+              brewer.country = line['country']
+              brewer.origin_state = line['origin_state']
+              brewer.origin_city = line['origin_city']
+              brewer.production = line['production']
+              brewer.url = line['url']
+              brewer.description = line['description']
+              brewer.save()
+              entry_count += 1
+        messages.success(request, str(entry_count)+' of '+str(num_entries)+' Brewers Imported.')
+      elif new_file.name == 'beers.csv':
+        records = csv.DictReader(new_file)
+        for line in records:
+          if line['name'] != '':
+            num_entries += 1
+            try:
+              btype = models.BeerType.objects.get(name=line['name'], brewer_id=line['brewer'], edition=line['edition'])
+            except:
+              btype = models.BeerType.objects.create(brewer_id=line['brewer'], style_id=line['style'])
+              btype.name = line['name']
+              btype.edition = line['edition']
+              if line['abv'] != '':
+                btype.abv = float(line['abv'])
+              if line['calories_oz'] != '':
+                btype.calories_oz = float(line['calories_oz'])
+              if line['carbs_oz'] != '':
+                btype.carbs_oz = float(line['carbs_oz'])
+              if line['original_gravity'] != '':
+                btype.original_gravity = float(line['original_gravity'])
+              if line['specific_gravity'] != '':
+                btype.specific_gravity = float(line['specific_gravity'])
+              if line['untappd_beer_id'] != '':
+                btype.untappd_beer_id = int(line['untappd_beer_id'])
+              btype.save()
+              entry_count += 1
+        messages.success(request, str(entry_count)+' of '+str(num_entries)+' Beer Types Imported.')
+      else:
+        messages.success(request, 'Nothing Imported. Try using a compatible filename.')
+
+  context = RequestContext(request)
+  context['style'] = "new"
+  context['form'] = form
+  return render_to_response('csv_import.html', context_instance=context)
 
 class UserViewSet(viewsets.ModelViewSet):
     """

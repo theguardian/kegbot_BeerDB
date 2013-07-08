@@ -126,3 +126,56 @@ class ConfirmImagesDelete(forms.ModelForm):
           Submit('submit', 'Delete', css_class='btn-primary'),
       )
   )
+
+class ConfirmMultipleBeerStyleDelete(forms.ModelForm):
+  class Meta:
+    model = models.BeerStyle
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('', css_class='input-xlarge'),
+      FormActions(
+          Submit('submit', 'Delete', css_class='btn-primary'),
+      )
+  )
+
+class ConfirmMultipleBrewerDelete(forms.ModelForm):
+  class Meta:
+    model = models.Brewer
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('', css_class='input-xlarge'),
+      FormActions(
+          Submit('submit', 'Delete', css_class='btn-primary'),
+      )
+  )
+
+class ConfirmMultipleBeerTypeDelete(forms.ModelForm):
+  class Meta:
+    model = models.BeerType
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('', css_class='input-xlarge'),
+      FormActions(
+          Submit('submit', 'Delete', css_class='btn-primary'),
+      )
+  )
+
+class ImportCSV(forms.Form):
+
+  new_file = forms.FileField(required=True,
+    help_text='Upload CSV.')
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('new_file'),
+      FormActions(
+          Submit('submit', 'Submit', css_class='btn-primary'),
+      )
+  )

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+{% include "header.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "sidebar.html" %}
+{% endblock %}
+
+{% block pane %}
+<h2>Choose CSV File</h2>
+<p>CSV files are provided by openbeerdb.com under Open Database License.  They were slightly modified
+	to rename duplicates (styles.csv had Porter & American-Style Amber Lager each listed twice), and 
+	headers were renamed to coincide with database models included in this package.</p>
+<p>Arbitrary CSV files can be utilized, provided that headers coincide with database models included
+	in this package.  For import to successfully work, filenames must be: styles.csv, breweries.csv, or beers.csv</p>
+<p>Valid header names for the following CSV files *must* include:</p>
+<li>styles.csv</li>
+<ol>name</ol>
+<li>breweries.csv</li>
+<ol>name, country, origin_state, origin_city, production, url, description</ol>
+<li>beers.csv</li>
+<ol>name, brewer*, style*, edition, abv, calories_oz, carbs_oz, original_gravity, specific_gravity, untappd_beer_id</ol>
+<ol>* these fields must contain a key id corresponding to proper relations in styles.csv and breweries.csv</ol>
+<p>For the love of god, make sure the CSV file uploaded is encoded UTF-8.  Export CSV as CSV (comma delimted).  Then open notepad and import the exported CSV file as UTF-8 and save as UTF-8 CSV if you have to.</p>
+    
+{% if request.method != 'POST' %} 
+	{% crispy form %}
+{% else %}
+	{% if messages %} 
+    	{% for message in messages %} 
+        	{{ message }} 
+    	{% endfor %} 
+	{% endif %} 
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+{% include "footer.html" %}
+{% endblock %}
