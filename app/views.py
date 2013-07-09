@@ -32,6 +32,11 @@ def beer_type_list(request):
   beers = models.BeerType.objects.all().order_by('name')
   paginator = Paginator(beers, 25)
 
+  if request.method == 'POST':
+    form = forms.SearchForm(request.POST)
+  else:
+    form = forms.SearchForm()
+
   page = request.GET.get('page')
   try:
     beers = paginator.page(page)
@@ -384,6 +389,11 @@ def csv_import(request):
               brewer.production = line['production']
               brewer.url = line['url']
               brewer.description = line['description']
+              if line['latitude'] != '':
+                brewer.latitude = float(line['latitude'])
+              if line['longitude'] != '':
+                brewer.longitude = float(line['longitude'])
+              brewer.accuracy = line['accuracy']
               brewer.save()
               entry_count += 1
         messages.success(request, str(entry_count)+' of '+str(num_entries)+' Brewers Imported.')

@@ -16,6 +16,7 @@ Built in a virtualenv with the following packages, installed using pip:
 * django-crispy-forms
 * djangorestframework
 * django-filter
+* django-selectable
 * markdown
 * south
 

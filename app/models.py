@@ -44,6 +44,13 @@ class Brewer(BeerDBModel):
     ('homebrew', 'Home brewer'),
   )
 
+  ACCURACY_CHOICES = (
+    ('rooftop', 'Rooftop'),
+    ('geometric_center', 'Geometric Center'),
+    ('interpolated', 'Range Interpolated'),
+    ('approximate', 'Approximate'),
+  )
+
   name = models.CharField(max_length=255,
       help_text='Name of the brewer',
       unique=True)
@@ -61,6 +68,12 @@ class Brewer(BeerDBModel):
       help_text='Brewer\'s home page')
   description = models.TextField(default='', blank=True, null=True,
       help_text='A short description of the brewer')
+  latitude = models.FloatField(blank=True, null=True,
+      help_text='Brewery Location, Latitude.')
+  longitude = models.FloatField(blank=True, null=True,
+      help_text='Brewery Location, Longitude.')
+  accuracy = models.CharField(max_length=128, choices=ACCURACY_CHOICES,
+      default='approximate')
   image = models.ForeignKey('Picture', blank=True, null=True,
       related_name='brewer', on_delete=models.SET_NULL,
       help_text='Logo or artwork for this brewer.')

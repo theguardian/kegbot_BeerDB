@@ -4,6 +4,8 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Hidden, Div
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
+from selectable.forms import AutoCompleteWidget
+from lookups import BeerTypeLookup
 
 from app import models
 
@@ -41,7 +43,7 @@ class BrewerForm(forms.ModelForm):
   class Meta:
     model = models.Brewer
     fields = ('name', 'country', 'origin_state', 'origin_city',
-        'production', 'url', 'description')
+        'production', 'url', 'description', 'latitude', 'longitude', 'accuracy')
 
   new_image = forms.ImageField(required=False,
     help_text='Set/replace image for this brewer.')
@@ -56,6 +58,9 @@ class BrewerForm(forms.ModelForm):
       Field('production'),
       Field('url'),
       Field('description'),
+      Field('latitude'),
+      Field('longitude'),
+      Field('accuracy'),
       Field('new_image'),
       FormActions(
           Submit('submit', 'Save', css_class='btn-primary'),
@@ -178,5 +183,22 @@ class ImportCSV(forms.Form):
       Field('new_file'),
       FormActions(
           Submit('submit', 'Submit', css_class='btn-primary'),
+      )
+  )
+
+class SearchForm(forms.Form):
+  q = forms.CharField(
+    label='Type the name of a beer',
+    widget=AutoCompleteWidget(BeerTypeLookup),
+    required=False,
+    help_text='Search',
+  )
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field('q', css_class='input-xlarge'),
+      FormActions(
+          Submit('submit', 'Delete', css_class='btn-primary'),
       )
   )

@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'imagekit',
     'rest_framework',
     'south',
+    'selectable',
 )
 
 # A sample logging configuration. The only tangible logging
