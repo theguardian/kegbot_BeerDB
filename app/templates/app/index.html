@@ -10,9 +10,28 @@
 {% endblock %}
 
 {% block pane %}
-Make a selection.
+
+<form action="" method="GET">
+{{beer_form}}
+<input type="submit" value="Go" class="btn btn-small btn-primary" />
+</form>
+
+<form action="" method="GET">{% csrf_token %}
+{{brewer_form}}
+<input type="submit" value="Go" class="btn btn-small btn-primary" />
+</form>
+
 {% endblock %}
 
 {% block footer %}
 {% include "footer.html" %}
 {% endblock %}
+
+<script type="text/javascript">
+$(function(){
+  $('[id=id_q]').bind('autocompleteselect', function(event, ui){
+    $(this).val(ui.item.value);
+    $(this).parents("form").submit();
+  });
+});
+</script>

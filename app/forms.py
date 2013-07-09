@@ -5,7 +5,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Hidden, Div
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from selectable.forms import AutoCompleteWidget
+from selectable.forms import AutoCompleteSelectField
 from lookups import BeerTypeLookup
+from lookups import BrewerLookup
 
 from app import models
 
@@ -186,19 +188,16 @@ class ImportCSV(forms.Form):
       )
   )
 
-class SearchForm(forms.Form):
-  q = forms.CharField(
-    label='Type the name of a beer',
-    widget=AutoCompleteWidget(BeerTypeLookup),
+class SearchBeerForm(forms.Form):
+  q = AutoCompleteSelectField(
+    lookup_class=BeerTypeLookup,
+    label='Search for a Beer:',
     required=False,
-    help_text='Search',
   )
 
-  helper = FormHelper()
-  helper.form_class = 'form-horizontal'
-  helper.layout = Layout(
-      Field('q', css_class='input-xlarge'),
-      FormActions(
-          Submit('submit', 'Delete', css_class='btn-primary'),
-      )
+class SearchBrewerForm(forms.Form):
+  q = AutoCompleteSelectField(
+    lookup_class=BrewerLookup,
+    label='Search for a Brewer:',
+    required=False,
   )

@@ -7,6 +7,7 @@ from django import forms
 from django.contrib import messages
 from django.core import serializers
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -25,17 +26,24 @@ from app import forms
 
 def index(request):
   context = RequestContext(request)
-  return render_to_response('index.html', context_instance=context)
+
+  beer_id = request.GET.get('beer-q_1')
+  brewer_id = request.GET.get('brewer-q_1')
+  if beer_id:
+    beer_id = int(beer_id)
+    return HttpResponseRedirect('/beers/%i/' % beer_id)
+  elif brewer_id:
+    brewer_id = int(brewer_id)
+    return HttpResponseRedirect('/brewers/%i/' % brewer_id)
+  else:
+    beer_form = forms.SearchBeerForm(prefix='beer')
+    brewer_form = forms.SearchBrewerForm(prefix='brewer')
+    return render_to_response('index.html', {'beer_form': beer_form, 'brewer_form': brewer_form}, context_instance=context)
 
 def beer_type_list(request):
   context = RequestContext(request)
   beers = models.BeerType.objects.all().order_by('name')
   paginator = Paginator(beers, 25)
-
-  if request.method == 'POST':
-    form = forms.SearchForm(request.POST)
-  else:
-    form = forms.SearchForm()
 
   page = request.GET.get('page')
   try:
