@@ -184,7 +184,20 @@ class ImportCSV(forms.Form):
   helper.layout = Layout(
       Field('new_file'),
       FormActions(
-          Submit('submit', 'Submit', css_class='btn-primary'),
+          Submit('submit', 'Import', css_class='btn-primary'),
+      )
+  )
+
+class ExportCSV(forms.Form):
+
+  placeholder = forms.CharField(max_length=1)
+
+  helper = FormHelper()
+  helper.form_class = 'form-horizontal'
+  helper.layout = Layout(
+      Field(''),
+      FormActions(
+          Submit('submit', 'Export', css_class='btn-primary'),
       )
   )
 

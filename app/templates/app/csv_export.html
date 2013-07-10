@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block pane %}
+<h2>Export Database to .CSV</h2>
+
+{% if request.method != 'POST' %} 
+	{% crispy form %}
+	<p>This will place three .csv files in your static directory / csv.</p>
+	<ul>
+		<li>beers.csv</li>
+		<li>breweries.csv</li>
+		<li>styles.csv</li>
+	</ul>
+{% else %}
+	{% if messages %} 
+    	{% for message in messages %} 
+        	{{ message }} 
+    	{% endfor %} 
+	{% endif %} 
+	<ul>
+		<li><a href="/media/csv/styles.csv">Download styles.csv</a></li>
+		<li><a href="/media/csv/breweries.csv">Download breweries.csv</a></li>
+		<li><a href="/media/csv/beers.csv">Download beers.csv</a></li>
+	</ul>
+{% endif %}
+
+
+
+
+{% endblock %}
+

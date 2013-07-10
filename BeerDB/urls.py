@@ -38,4 +38,5 @@ urlpatterns = patterns('',
     url(r'^tools/brewers-wipe/$', views.brewers_wipe, name='wipe-brewers'),
     url(r'^tools/beers-wipe/$', views.beers_wipe, name='wipe-beers'),
     url(r'^tools/import/$', views.csv_import, name='import-csv'),
+    url(r'^tools/export/$', views.csv_export, name='export-csv'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

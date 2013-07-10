@@ -23,6 +23,7 @@ from app.serializers import UserSerializer, GroupSerializer
 from app.serializers import BeerTypeSerializer, BeerStyleSerializer, BrewerSerializer, PictureSerializer
 from app import models
 from app import forms
+from app import functions
 
 def index(request):
   context = RequestContext(request)
@@ -36,15 +37,12 @@ def index(request):
     brewer_id = int(brewer_id)
     return HttpResponseRedirect('/brewers/%i/' % brewer_id)
   else:
-    beers_count = models.BeerType.objects.all().count()
-    beers_edited = models.BeerType.objects.all().order_by('edited').reverse()[:5]
-    beers_added = models.BeerType.objects.all().order_by('added').reverse()[:5]
+    beers_edited = models.BeerType.objects.all().order_by('edited').reverse()[:10]
+    beers_added = models.BeerType.objects.all().order_by('added').reverse()[:10]
+    brewer_edited = models.Brewer.objects.all().order_by('edited').reverse()[:10]
+    brewer_added = models.Brewer.objects.all().order_by('added').reverse()[:10]
     context['beers_edited'] = beers_edited
     context['beers_added'] = beers_added
-
-    brewer_count = models.Brewer.objects.all().count()
-    brewer_edited = models.Brewer.objects.all().order_by('edited').reverse()[:5]
-    brewer_added = models.Brewer.objects.all().order_by('added').reverse()[:5]
     context['brewer_edited'] = brewer_edited
     context['brewer_added'] = brewer_added
 
@@ -371,7 +369,6 @@ def beers_wipe(request):
 
 def csv_import(request):
   
-  form = forms.ImportCSV()
   if request.method == 'POST':
     form = forms.ImportCSV(request.POST, request.FILES)
     if form.is_valid():
@@ -444,11 +441,35 @@ def csv_import(request):
         messages.success(request, str(entry_count)+' of '+str(num_entries)+' Beer Types Imported.')
       else:
         messages.success(request, 'Nothing Imported. Try using a compatible filename.')
+  else:
+      form = forms.ImportCSV()
 
   context = RequestContext(request)
   context['style'] = "new"
   context['form'] = form
   return render_to_response('csv_import.html', context_instance=context)
+
+def csv_export(request):
+
+  context = RequestContext(request)
+
+  if request.method == 'POST':
+    form = forms.ExportCSV(request.POST)
+    #if form.is_valid():
+    style_qs = models.BeerStyle.objects.all().order_by('id')
+    functions.exp_csv(style_qs, 'styles')
+    brewers_qs = models.Brewer.objects.all().order_by('id')
+    functions.exp_csv(brewers_qs, 'breweries')
+    beers_qs = models.BeerType.objects.all().order_by('id')
+    functions.exp_csv(beers_qs, 'beers')
+    messages.success(request, 'CSV files successfully exported.')
+  else:
+    form = forms.ExportCSV()
+
+  context['style'] = "new"
+  context['form'] = form
+  
+  return render_to_response('csv_export.html', context_instance=context)
 
 class UserViewSet(viewsets.ModelViewSet):
     """
