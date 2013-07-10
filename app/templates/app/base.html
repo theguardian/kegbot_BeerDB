@@ -48,5 +48,17 @@
         (C) 2013, Justin Evans.  Initial schema/design by <a href="https://github.com/Kegbot/kegbot">kegbot</a>.  Initial dB contents provided by <a href="http://openbeerdb.com">openbeerdb</a>.
     </div>
   </div>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $(':input[id=id_beer-q_0]').bind('djselectableselect', function(event, ui) {
+      $(this).parents("form").submit();
+    });
+    $(':input[id=id_brewer-q_0]').bind('djselectableselect', function(event, ui) {
+      $(this).parents("form").submit();
+    });
+  });
+  </script>
+
 </body>
 </html>

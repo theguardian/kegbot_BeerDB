@@ -8,11 +8,3 @@
 <input type="submit" value="Go" class="btn btn-small btn-primary" />
 </form>
 
-<script type="text/javascript">
-$(function(){
-  $('[id=id_beer-q]').bind('autocompleteselect', function(event, ui){
-    $(this).val(ui.item.value);
-    $(this).parents("form").submit();
-  });
-});
-</script>
