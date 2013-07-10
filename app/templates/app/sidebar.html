@@ -1,6 +1,9 @@
-<ul>
-<li><a href="{% url 'brewers' %}">Brewers</li>
-<li><a href="{% url 'beer-styles' %}">Beer Styles</li>
-<li><a href="{% url 'beer-types' %}">Beer List</a></li>
-<li><a href="{% url 'tools' %}">Tools</a></li>
-</ul>
+<form action="{% url 'index' %}" method="GET">
+{{beer_form}}
+<input type="submit" value="Go" class="btn btn-small btn-primary" />
+</form>
+
+<form action="{% url 'index' %}" method="GET">
+{{brewer_form}}
+<input type="submit" value="Go" class="btn btn-small btn-primary" />
+</form>

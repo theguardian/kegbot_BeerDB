@@ -1,37 +1,35 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block header %}
-{% include "header.html" %}
-{% endblock %}
-
-{% block sidebar %}
-{% include "sidebar.html" %}
-{% endblock %}
-
 {% block pane %}
 
-<form action="" method="GET">
-{{beer_form}}
-<input type="submit" value="Go" class="btn btn-small btn-primary" />
-</form>
 
-<form action="" method="GET">{% csrf_token %}
-{{brewer_form}}
-<input type="submit" value="Go" class="btn btn-small btn-primary" />
-</form>
+<ul>
+{% for beer in beers_edited %}
+<li>
+	<a href="{% url 'edit-beer-type' beer.id %}">{{beer.name}}</a> by <a href="{% url 'edit-brewer' beer.brewer.id %}">{{beer.brewer.name}}</a> edited on {{beer.edited}}</li>
+{% endfor %}
+</ul>
+
+<ul>
+{% for beer in beers_added %}
+<li>
+	<a href="{% url 'edit-beer-type' beer.id %}">{{beer.name}}</a> by <a href="{% url 'edit-brewer' beer.brewer.id %}">{{beer.brewer.name}}</a> added on {{beer.edited}}</li>
+{% endfor %}
+</ul>
+
+<ul>
+{% for brewer in brewer_edited %}
+<li>
+	<a href="{% url 'edit-brewer' brewer.id %}">{{brewer.name}}</a> edited on {{brewer.edited}}</li>
+{% endfor %}
+</ul>
+
+<ul>
+{% for brewer in brewer_added %}
+<li>
+	<a href="{% url 'edit-brewer' brewer.id %}">{{brewer.name}}</a> added on {{brewer.edited}}</li>
+{% endfor %}
+</ul>
 
 {% endblock %}
-
-{% block footer %}
-{% include "footer.html" %}
-{% endblock %}
-
-<script type="text/javascript">
-$(function(){
-  $('[id=id_q]').bind('autocompleteselect', function(event, ui){
-    $(this).val(ui.item.value);
-    $(this).parents("form").submit();
-  });
-});
-</script>

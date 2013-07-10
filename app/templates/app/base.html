@@ -1,3 +1,6 @@
+{% load sidebar %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -20,12 +23,20 @@
 <body>
   <div id="container">
     <div id="header">
-        {% block header %}{% endblock %}
+        <a class ="btn btn-small btn-primary" href="{% url 'index' %}">HOME / SEARCH</a>
+        <a class ="btn btn-small btn-primary" href="{% url 'add-beer-type' %}">Add a Beer</a>
+        <a class ="btn btn-small btn-primary" href="{% url 'add-brewer' %}">Add a Brewer</a>
     </div>
 
     <div id="content">
       <div class="sidebar">
-        {% block sidebar %}{% endblock %}
+        {% sidebar %}
+        <ul>
+          <li><a href="{% url 'brewers' %}">Brewers</li>
+          <li><a href="{% url 'beer-styles' %}">Beer Styles</li>
+          <li><a href="{% url 'beer-types' %}">Beer List</a></li>
+          <li><a href="{% url 'tools' %}">Tools</a></li>
+        </ul>
       </div>
 
       <div class="pane">
@@ -34,7 +45,7 @@
     </div>
 
     <div id="footer">
-        {% block footer %}{% endblock %}
+        (C) 2013, Justin Evans.  Initial schema/design by <a href="https://github.com/Kegbot/kegbot">kegbot</a>.  Initial dB contents provided by <a href="http://openbeerdb.com">openbeerdb</a>.
     </div>
   </div>
 </body>

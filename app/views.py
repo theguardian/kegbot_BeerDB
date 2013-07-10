@@ -36,9 +36,19 @@ def index(request):
     brewer_id = int(brewer_id)
     return HttpResponseRedirect('/brewers/%i/' % brewer_id)
   else:
-    beer_form = forms.SearchBeerForm(prefix='beer')
-    brewer_form = forms.SearchBrewerForm(prefix='brewer')
-    return render_to_response('index.html', {'beer_form': beer_form, 'brewer_form': brewer_form}, context_instance=context)
+    beers_count = models.BeerType.objects.all().count()
+    beers_edited = models.BeerType.objects.all().order_by('edited').reverse()[:5]
+    beers_added = models.BeerType.objects.all().order_by('added').reverse()[:5]
+    context['beers_edited'] = beers_edited
+    context['beers_added'] = beers_added
+
+    brewer_count = models.Brewer.objects.all().count()
+    brewer_edited = models.Brewer.objects.all().order_by('edited').reverse()[:5]
+    brewer_added = models.Brewer.objects.all().order_by('added').reverse()[:5]
+    context['brewer_edited'] = brewer_edited
+    context['brewer_added'] = brewer_added
+
+    return render_to_response('index.html', context_instance=context)
 
 def beer_type_list(request):
   context = RequestContext(request)

@@ -1,14 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block header %}
-{% include "header.html" %}
-{% endblock %}
-
-{% block sidebar %}
-{% include "sidebar.html" %}
-{% endblock %}
-
 {% block pane %}
 <h2>Add Beer Style</h2>
     
@@ -23,8 +15,4 @@
 	{% crispy form %}
 {% endif %}
 
-{% endblock %}
-
-{% block footer %}
-{% include "footer.html" %}
 {% endblock %}
