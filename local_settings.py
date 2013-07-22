@@ -5,7 +5,7 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/share/MD0_DATA/Public/virtualenv/kegbot_BeerDB/static/database/BeerDB.sqlite',                      # Or path to database file if using sqlite3.
+        'NAME': '/share/MD0_DATA/VIRTUALENV/kegbot_BeerDB/static/database/BeerDB.sqlite',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -21,7 +21,7 @@ TIME_ZONE = 'America/Los_Angeles'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = '/share/MD0_DATA/Public/virtualenv/kegbot_BeerDB/media/'
+MEDIA_ROOT = '/share/MD0_DATA/VIRTUALENV/kegbot_BeerDB/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -32,7 +32,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/share/MD0_DATA/Public/virtualenv/kegbot_BeerDB/static/'
+STATIC_ROOT = '/share/MD0_DATA/VIRTUALENV/kegbot_BeerDB/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -49,7 +49,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/share/MD0_DATA/Public/virtualenv/kegbot_BeerDB/app/templates/app"
+    "/share/MD0_DATA/VIRTUALENV/kegbot_BeerDB/app/templates/app"
 )
 
 # Make this unique, and don't share it with anybody.
