@@ -40,7 +40,7 @@ For production servers, the following are recommended with sudo apt-get:
 7. >> sudo ln -s /etc/nginx/sites-available/kegbot_BeerDB-nginx.conf /etc/nginx/sites-enabled/
 8. >> sudo cp production/kegbot_BeerDB-supervisor.conf /etc/supervisor/conf.d/kegbot_BeerDB.conf
 9. >> sudo service nginx restart
-10. >> sudo service supervisorctl restart
+10. >> sudo service supervisor restart
 
 Then the kegbot_BeerDB will be available on http://YO.UR.IP.AD:8334!
 
