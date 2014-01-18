@@ -1,3 +1,4 @@
 *.pyc
 /media/CACHE/*
 /media/pics/*
+BeerDB_supervisor.log
