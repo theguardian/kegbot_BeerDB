@@ -25,15 +25,15 @@ For production servers, the following are recommended with sudo apt-get:
 * nginx
 * supervisor
 
-Instructions for use:
+## Instructions for use:
 1. Git clone into directory of your choice
 2. Modify local_settings.py for your local environment (<your_absolute_directory>/kegbot_BeerDB/*)
 3. >> python manage.py collectstatic
 
-For development:
+## For development:
 4. >> python manage.py runserver 0.0.0.0:<PORT #>
 
-For production:
+## For production:
 4. Update values in /production/kegbot_BeerDB-supervisor.conf (<your_absolute_directory>/kegbot_BeerDB/*)
 5. Update values in /production/kegbot_BeerDB-nginx.conf (<your_absolute_directory>/kegbot_BeerDB/*)
 6. >> sudo cp production/kegbot_BeerDB-nginx.conf /etc/nginx/sites-available/
